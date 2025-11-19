@@ -1,7 +1,7 @@
 let formin = document.querySelector(".formin");
 
 let arr = JSON.parse(localStorage.getItem("arr")) || [];
-47;
+
 let btn = document.querySelector("#buttonn");
 let foorm = document.querySelector(".formulaire");
 let name1 = document.querySelector(".nameof");
@@ -51,6 +51,7 @@ donebtn.addEventListener("click", (e) => {
   localStorage.setItem("arr", JSON.stringify(arr));
   //   localStorage.setItem("nextid", JSON.stringify(nextid));
   showStaff();
+  renderStafferoom();
 });
 let staffForm = document.querySelector(".staffForm");
 let addToRoom = document.querySelector(".addToRoom");
@@ -96,7 +97,8 @@ function showStaffForm() {
   StaffFormContainer.innerHTML = "";
   const availableStaff = arr.filter((e) => e.room_id === "main_list");
   if (availableStaff.length === 0) {
-    StaffFormContainer.innerHTML = '<div class="p-4 text-center text-gray-500">! There is no available staff to add.</div>';
+    StaffFormContainer.innerHTML =
+      '<div class="p-4 text-center text-gray-500">! There is no available staff to add.</div>';
     return;
   }
   availableStaff.forEach((e) => {
@@ -142,17 +144,76 @@ function selectedStaff(e) {
   const staffIndx = arr.findIndex((tar) => parseInt(tar.id) === staffId);
   if (staffIndx > -1) {
     arr[staffIndx].room_id = currentTarget;
-
-    localStorage.setItem("arr", JSON.string.JSON+ify(arr));
+    localStorage.setItem("arr", JSON.stringify(arr));
     document.querySelector(".staffForm").classList.add("is-hidden");
     targetRoom = null;
-    showStaff();
+    showAllStaff();
   }
 }
-staffForm.addEventListener("click", selectedStaff);
-let allRooms = document.querySelector('.room')
-let eachRoom = document.querySelector('.roomStaffList')
-function renderStafferoom(){
-    const arr = JSON.parse(localStorage.getItem('arr'))
-    
+function unassignStaff(staffId) {
+    let localArr = JSON.parse(localStorage.getItem("arr")) || [];
+    const staffIndx = localArr.findIndex(staff => staff.id === staffId)
+    if (staffIndx > -1) {
+        localArr[staffIndx].room_id = "main_list"; 
+        localStorage.setItem("arr", JSON.stringify(localArr));
+        showAllStaff(); 
+    }
 }
+staffForm.addEventListener("click", selectedStaff);
+let allRooms = document.querySelector(".room");
+function renderStafferoom() {
+  const arr = JSON.parse(localStorage.getItem("arr"));
+  let eachRoom = document.querySelectorAll(".roomStaffList");
+  console.log(eachRoom);
+  eachRoom.forEach((con) => {
+    con.innerHTML = "";
+  });
+  arr.forEach((staff) => {
+    if (staff.room_id !== "main_list") {
+      const roomcCmtainer = document.querySelector(`.room[data-room-id="${staff.room_id}"]`);
+      console.log(roomcCmtainer, "roomcontainer");
+      if (roomcCmtainer) {
+        const addstaff = document.createElement("div");
+        console.log(addstaff);
+        addstaff.className = "room-card-staff";
+        addstaff.setAttribute("data-user-id", staff.id);
+        addstaff.innerHTML = `
+           <div class="staff-card" data-user-id=${staff.id}>
+        <img src="./img/54b19ada-d53e-4ee9-8882-9dfed1bf1396.jpg" alt="Profile Avatar" class="avatar">
+        <div class="details">
+        <div class="name">${staff.name}</div>
+        <div class="role">${staff.role}</div>
+        </div>
+        <button class="remove-btn" data-user-delete='${staff.id}'>delete</button>
+        </div>`;
+        console.log(addstaff, "after");
+        const removeBtn = addstaff.querySelector(".remove-btn");
+        removeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+            unassignStaff(removeBtn.dataset.staffId);
+        });
+        roomcCmtainer.appendChild(addstaff);
+      }
+    }
+  });
+  localStorage.setItem(('arr'), JSON.stringify(arr))
+}
+
+function showAllStaff(){
+    showStaff();
+    renderStafferoom();
+}
+
+window.onload = showAllStaff; 
+
+
+
+
+
+
+
+
+
+
+// let shd = document.querySelector('.ksdjh')
+// let skhb = shd.children[2];
