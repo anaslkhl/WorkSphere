@@ -1,9 +1,7 @@
-const { createElement } = require("react");
-
 let formin = document.querySelector(".formin");
 
 let arr = JSON.parse(localStorage.getItem("arr")) || [];
-let nextid = JSON.parse(localStorage.getItem("arr")) || 0;
+47;
 let btn = document.querySelector("#buttonn");
 let foorm = document.querySelector(".formulaire");
 let name1 = document.querySelector(".nameof");
@@ -24,7 +22,11 @@ donebtn.addEventListener("click", (e) => {
   let number = document.querySelector("#phoneof").value.trim();
   let emaill = document.querySelector("#emailof").value.trim();
   let experiences = document.querySelector("#experof").value.trim();
-  let nextid = JSON.parse(localStorage.getItem("arr")) || 0;
+  let maxId =
+    arr.length > 0 ? Math.max(...arr.map((s) => parseInt(s.id) || 0)) : 0;
+  let nextid = maxId + 1;
+
+  //   let nextid = JSON.parse(localStorage.getItem("arr")) || 0;
 
   console.log(namee);
   console.log(role);
@@ -40,15 +42,16 @@ donebtn.addEventListener("click", (e) => {
     number: number,
     email: emaill,
     experience: experiences,
+    room_id: "main_list",
   };
 
   arr.push(newarr);
+  //   nextid++;
+  //   foorm.reset();
   localStorage.setItem("arr", JSON.stringify(arr));
-  localStorage.setItem("nextid", JSON.stringify(nextid));
-
+  //   localStorage.setItem("nextid", JSON.stringify(nextid));
   showStaff();
 });
-
 let staffForm = document.querySelector(".staffForm");
 let addToRoom = document.querySelector(".addToRoom");
 addToRoom.addEventListener("click", (e) => showStaffForm());
@@ -57,9 +60,11 @@ function showStaff() {
   let arr = JSON.parse(localStorage.getItem("arr")) || [];
   membercontain.innerHTML = "";
 
-  arr.forEach((ev) => {
-    let member = document.createElement("div");
-    member.innerHTML += `
+  arr
+    .filter((ev) => ev.room_id === "main_list")
+    .forEach((ev) => {
+      let member = document.createElement("div");
+      member.innerHTML += `
         <div class="members" data-staff-id=${ev.id}>
         <img
         class="avatar"
@@ -72,48 +77,82 @@ function showStaff() {
         <button class="edit-btn" data-user-edit=${ev.id}>Edit</button>
         </div>
         `;
-    membercontain.appendChild(member);
-    localStorage.setItem("arr", JSON.stringify(arr));
-  });
+      membercontain.appendChild(member);
+      localStorage.setItem("arr", JSON.stringify(arr));
+    });
 }
 showStaff();
 
+let currentTarget = null;
+
 function showStaffForm() {
   let arr = JSON.parse(localStorage.getItem("arr")) || [];
-  let nextid = JSON.parse(localStorage.getItem('nextid')) || 0
+  let nextid = JSON.parse(localStorage.getItem("nextid")) || 0;
   let formStaff = document.querySelector(".staffForm");
-  let StaffForm = document.querySelector(".sform");
+  let StaffFormContainer = document.querySelector(".sform");
   staffForm.classList.remove("is-hidden");
   console.log("comed");
-  arr.forEach((e) => {
-    StaffForm.innerHTML += `
+
+  StaffFormContainer.innerHTML = "";
+  const availableStaff = arr.filter((e) => e.room_id === "main_list");
+  if (availableStaff.length === 0) {
+    StaffFormContainer.innerHTML = '<div class="p-4 text-center text-gray-500">! There is no available staff to add.</div>';
+    return;
+  }
+  availableStaff.forEach((e) => {
+    StaffFormContainer.innerHTML += `
         <div class="staff-card" data-user-id=${e.id}>
         <img src="./img/54b19ada-d53e-4ee9-8882-9dfed1bf1396.jpg" alt="Profile Avatar" class="avatar">
         <div class="details">
         <div class="name">${e.name}</div>
         <div class="role">${e.role}</div>
-        </div>showStaffForm
+        </div>
         <button class="edit-btn">Edit</button>
         </div>
         `;
     // formStaff.appendChild(StaffForm)
-    localStorage.setItem(('nextid'), JSON.stringify(nextid))
+    //   localStorage.setItem("nextid", JSON.stringify(nextid));
     localStorage.setItem("arr", JSON.stringify(arr));
   });
 }
-
+// let selectedStaffId = null;
 let roomcontain = document.querySelector(".rooms-container");
 roomcontain.addEventListener("click", addToRooms);
+
 function addToRooms(ev) {
   let arr = JSON.parse(localStorage.getItem("arr"));
-  let arrroom1 = []
   let room = ev.target.closest(".room");
   if (!room) {
     return;
   }
   let targetRoom = room.dataset.roomId;
-  let rooms = createElement("div");
+  currentTarget = targetRoom;
+  showStaffForm();
 }
-function selectedStaff(){
+function selectedStaff(e) {
+  let staffCard = e.target.closest(".staff-card");
+  let arr = JSON.parse(localStorage.getItem("arr"));
+  if (!staffCard) {
+    return;
+  }
+  const staffId = parseInt(staffCard.dataset.userId);
+  if (!currentTarget) {
+    return;
+  }
+  const staffIndx = arr.findIndex((tar) => parseInt(tar.id) === staffId);
+  if (staffIndx > -1) {
+    arr[staffIndx].room_id = currentTarget;
+
+    localStorage.setItem("arr", JSON.string.JSON+ify(arr));
+    document.querySelector(".staffForm").classList.add("is-hidden");
+    targetRoom = null;
+    showStaff();
+  }
+}
+staffForm.addEventListener("click", selectedStaff);
+let allRooms = document.querySelector('.room')
+let eachRoom = document.querySelector('.roomStaffList')
+function renderStafferoom(){
+    const arr = JSON.parse(localStorage.getItem('arr'))
     
 }
