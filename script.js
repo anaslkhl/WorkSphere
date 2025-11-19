@@ -146,31 +146,36 @@ function selectedStaff(e) {
     arr[staffIndx].room_id = currentTarget;
     localStorage.setItem("arr", JSON.stringify(arr));
     document.querySelector(".staffForm").classList.add("is-hidden");
-    targetRoom = null;
+    currentTarget = null;
     showAllStaff();
   }
 }
 function unassignStaff(staffId) {
-    let localArr = JSON.parse(localStorage.getItem("arr")) || [];
-    const staffIndx = localArr.findIndex(staff => staff.id === staffId)
-    if (staffIndx > -1) {
-        localArr[staffIndx].room_id = "main_list"; 
-        localStorage.setItem("arr", JSON.stringify(localArr));
-        showAllStaff(); 
-    }
+  let localArr = JSON.parse(localStorage.getItem("arr")) || [];
+  const staffIndx = localArr.findIndex((staff) => staff.id === staffId);
+  if (staffIndx > -1) {
+    localArr[staffIndx].room_id = "main_list";
+    localStorage.setItem("arr", JSON.stringify(localArr));
+    showAllStaff();
+  }
 }
 staffForm.addEventListener("click", selectedStaff);
 let allRooms = document.querySelector(".room");
+
 function renderStafferoom() {
   const arr = JSON.parse(localStorage.getItem("arr"));
-  let eachRoom = document.querySelectorAll(".roomStaffList");
-  console.log(eachRoom);
-  eachRoom.forEach((con) => {
-    con.innerHTML = "";
+  //   let eachRoom = document.querySelectorAll(".roomStaffList");
+//   console.log(eachRoom);
+  document.querySelectorAll(".room").forEach((roomContainer) => {
+    roomContainer.querySelectorAll(".room-card-staff").forEach((card) => {
+      card.remove();
+    });
   });
   arr.forEach((staff) => {
     if (staff.room_id !== "main_list") {
-      const roomcCmtainer = document.querySelector(`.room[data-room-id="${staff.room_id}"]`);
+      const roomcCmtainer = document.querySelector(
+        `.room[data-room-id="${staff.room_id}"]`
+      );
       console.log(roomcCmtainer, "roomcontainer");
       if (roomcCmtainer) {
         const addstaff = document.createElement("div");
@@ -190,30 +195,21 @@ function renderStafferoom() {
         const removeBtn = addstaff.querySelector(".remove-btn");
         removeBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-            unassignStaff(removeBtn.dataset.staffId);
+          unassignStaff(removeBtn.dataset.staffId);
         });
         roomcCmtainer.appendChild(addstaff);
       }
     }
   });
-  localStorage.setItem(('arr'), JSON.stringify(arr))
+  //   localStorage.setItem(('arr'), JSON.stringify(arr))
 }
 
-function showAllStaff(){
-    showStaff();
-    renderStafferoom();
+function showAllStaff() {
+  showStaff();
+  renderStafferoom();
 }
 
-window.onload = showAllStaff; 
-
-
-
-
-
-
-
-
-
+window.onload = showAllStaff;
 
 // let shd = document.querySelector('.ksdjh')
 // let skhb = shd.children[2];
