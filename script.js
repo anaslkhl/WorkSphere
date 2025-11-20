@@ -16,7 +16,12 @@ let detmail = document.querySelector("#detemail");
 let detexper = document.querySelector("#detexper");
 const detid = document.querySelector("#detid")
 
+//This Event for Showing the staff details//
+
 membercontain.addEventListener("click", ShowDetails);
+
+//This Function is for showing the selected staff from the unassigned//
+
 let FormStaffDet = document.querySelector('#FormStaffDet')
 function ShowDetails(e) {
   let arr = JSON.parse(localStorage.getItem("arr"));
@@ -60,13 +65,21 @@ function ShowDetails(e) {
 
   FormStaffDet.setAttribute("attr", "display")
 }
+
+//This event For closing the form details when clickig on 'X' button//
+
 document.querySelector('#exitForm').addEventListener('click', () => {FormStaffDet.setAttribute("attr", "none")})
+
+//This event For adding a staff member to unassinged list//
 
 btn.addEventListener("click", (e) => {
   e.preventDefault();
   foorm.classList.remove("is-hidden");
   // roomcontain.style.display="none"
 });
+
+//This event for taking the inputs values with the validation of each one of them//
+
 donebtn.addEventListener("click", (e) => {
   e.preventDefault();
   let arr = JSON.parse(localStorage.getItem("arr")) || [];
@@ -135,7 +148,12 @@ donebtn.addEventListener("click", (e) => {
 });
 let staffForm = document.querySelector(".staffForm");
 let addToRoom = document.querySelector(".addToRoom");
+
+//This event for add a staff to a room//
+
 addToRoom.addEventListener("click", (e) => showStaffForm());
+
+//This function for show staff members on the unassinged list//
 
 function showStaff() {
   let arr = JSON.parse(localStorage.getItem("arr")) || [];
@@ -165,6 +183,8 @@ function showStaff() {
 showStaff();
 
 let currentTarget = null;
+
+//This function is for show the staff members of unassigned list for add a staff to a room //
 
 function showStaffForm() {
   let arr = JSON.parse(localStorage.getItem("arr")) || [];
@@ -201,6 +221,8 @@ function showStaffForm() {
 let roomcontain = document.querySelector(".rooms-container");
 roomcontain.addEventListener("click", addToRooms);
 
+//This Function taking the id of the target room to add the staff to it//
+
 function addToRooms(ev) {
   let arr = JSON.parse(localStorage.getItem("arr"));
   let room = ev.target.closest(".room");
@@ -211,6 +233,9 @@ function addToRooms(ev) {
   currentTarget = targetRoom;
   showStaffForm();
 }
+
+//This function for taking the index of the selected staff member and move it to the target room//
+
 function selectedStaff(e) {
   let staffCard = e.target.closest(".staff-card");
   let arr = JSON.parse(localStorage.getItem("arr"));
@@ -231,6 +256,9 @@ function selectedStaff(e) {
     showAllStaff();
   }
 }
+
+//This function for moving the staff members to the unassigned list//
+
 function unassignStaff(staffId) {
   console.log("unsigned");
   let arr = JSON.parse(localStorage.getItem("arr")) || [];
@@ -243,6 +271,9 @@ function unassignStaff(staffId) {
     showAllStaff();
   }
 }
+
+//This Event is for the clicked staff card to take the index of the clicked card//
+
 staffForm.addEventListener("click", selectedStaff);
 let allRooms = document.querySelector(".room");
 
