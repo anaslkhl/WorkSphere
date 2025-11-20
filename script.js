@@ -22,15 +22,37 @@ donebtn.addEventListener("click", (e) => {
   let number = document.querySelector("#phoneof").value.trim();
   let emaill = document.querySelector("#emailof").value.trim();
   let experiences = document.querySelector("#experof").value.trim();
+  let urll = document.querySelector("#urlof").value.trim();
   let maxId =
     arr.length > 0 ? Math.max(...arr.map((s) => parseInt(s.id) || 0)) : 0;
   let nextid = maxId + 1;
 
   //   let nextid = JSON.parse(localStorage.getItem("arr")) || 0;
 
-  console.log(namee);
-  console.log(role);
-  console.log(number);
+  //   console.log(namee);
+  //   console.log(role);
+  //   console.log(number);
+
+  const regexname = /^[\p{L}\s\.\-]{2,100}$/u;
+
+  if (!regexname.test(namee)) {
+    console.error("! invalid name enter a correct name");
+  }
+  const regexphone = /^\+?(\s*\d\s*[\-\s\.]*){10,15}$/;
+
+  if (!regexphone.test(number)) {
+    console.error("Enter a valid phone number");
+  }
+  const regexemail = /^[\w\.\-]+@[\w\-]+\.[a-zA-Z]{2,4}(\.[a-zA-Z]{2,4})?$/;
+
+  if (!regexemail.test(emaill)) {
+    alert("Enter a avalid email");
+  }
+  const regexurl = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/;
+
+  if (!regexurl.test(urll)) {
+    alert("Enter a avalid url");
+  }
 
   foorm.classList.add("is-hidden");
   let newarr = {};
@@ -39,6 +61,7 @@ donebtn.addEventListener("click", (e) => {
     id: nextid,
     name: namee,
     role: role,
+    url: urll,
     number: number,
     email: emaill,
     experience: experiences,
@@ -92,7 +115,7 @@ function showStaffForm() {
   let formStaff = document.querySelector(".staffForm");
   let StaffFormContainer = document.querySelector(".sform");
   staffForm.classList.remove("is-hidden");
-  console.log("comed");
+  //   console.log("comed");
 
   StaffFormContainer.innerHTML = "";
   const availableStaff = arr.filter((e) => e.room_id === "main_list");
@@ -137,7 +160,8 @@ function selectedStaff(e) {
   if (!staffCard) {
     return;
   }
-  const staffId = parseInt(staffCard.dataset.userId);
+  let staffId = parseInt(staffCard.dataset.userId);
+  console.log(staffId);
   if (!currentTarget) {
     return;
   }
@@ -151,11 +175,14 @@ function selectedStaff(e) {
   }
 }
 function unassignStaff(staffId) {
-  let localArr = JSON.parse(localStorage.getItem("arr")) || [];
-  const staffIndx = localArr.findIndex((staff) => staff.id === staffId);
+  console.log("unsigned");
+  let arr = JSON.parse(localStorage.getItem("arr")) || [];
+  const staffIndx = arr.findIndex((staff) => staff.id == staffId);
+  console.log(staffId);
+  console.log(staffIndx);
   if (staffIndx > -1) {
-    localArr[staffIndx].room_id = "main_list";
-    localStorage.setItem("arr", JSON.stringify(localArr));
+    arr[staffIndx].room_id = "main_list";
+    localStorage.setItem("arr", JSON.stringify(arr));
     showAllStaff();
   }
 }
@@ -165,7 +192,7 @@ let allRooms = document.querySelector(".room");
 function renderStafferoom() {
   const arr = JSON.parse(localStorage.getItem("arr"));
   //   let eachRoom = document.querySelectorAll(".roomStaffList");
-//   console.log(eachRoom);
+  //   console.log(eachRoom);
   document.querySelectorAll(".room").forEach((roomContainer) => {
     roomContainer.querySelectorAll(".room-card-staff").forEach((card) => {
       card.remove();
@@ -176,10 +203,10 @@ function renderStafferoom() {
       const roomcCmtainer = document.querySelector(
         `.room[data-room-id="${staff.room_id}"]`
       );
-      console.log(roomcCmtainer, "roomcontainer");
+      //   console.log(roomcCmtainer, "roomcontainer");
       if (roomcCmtainer) {
         const addstaff = document.createElement("div");
-        console.log(addstaff);
+        // console.log(addstaff);
         addstaff.className = "room-card-staff";
         addstaff.setAttribute("data-user-id", staff.id);
         addstaff.innerHTML = `
@@ -189,13 +216,14 @@ function renderStafferoom() {
         <div class="name">${staff.name}</div>
         <div class="role">${staff.role}</div>
         </div>
-        <button class="remove-btn" data-user-delete='${staff.id}'>delete</button>
+        <button class="remove-btn" data-user-id='${staff.id}'>delete</button>
         </div>`;
-        console.log(addstaff, "after");
+        // console.log(addstaff, "after");
         const removeBtn = addstaff.querySelector(".remove-btn");
         removeBtn.addEventListener("click", (e) => {
+          console.log("comed");
           e.stopPropagation();
-          unassignStaff(removeBtn.dataset.staffId);
+          unassignStaff(removeBtn.dataset.userId);
         });
         roomcCmtainer.appendChild(addstaff);
       }

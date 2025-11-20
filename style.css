@@ -116,14 +116,21 @@ aside {
 .test {
   width: 96%;
   height: 90%;
-  margin-left: 10px;
-  margin-top: 27px;
+  margin-left: 0px;
+  margin-top: 13px;
 }
 .room1 {
   grid-area: room1;
-  width: 95%;
-  height: 84%;
-  margin-top: 30px;
+  width: 27vw;
+  height: 23vh;
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: wrap;
+  row-gap: 31px;
+  /* align-content: space-between; */
+  /* justify-content: flex-start; */
+  align-items: center;
+  /* margin-top: 30px; */
 }
 .room2 {
   grid-area: room2;
@@ -136,6 +143,8 @@ aside {
   grid-area: room4;
   height: 93%;
   margin-top: 5px;
+  row-gap: 30px;
+  flex-wrap: wrap;
 }
 .room5 {
   grid-area: room5;
@@ -237,7 +246,8 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="tel"] {
+input[type="tel"],
+input[type="url"] {
   width: 98%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -295,7 +305,7 @@ input:focus {
 .meeting {
   display: flex;
   flex-direction: column-reverse;
-  flex-wrap: nowrap;
+  /* flex-wrap: nowrap; */
   align-content: space-between;
   justify-content: flex-start;
   align-items: center;
@@ -303,7 +313,7 @@ input:focus {
 .room {
   display: flex;
   flex-direction: column-reverse;
-  flex-wrap: nowrap;
+  /* flex-wrap: nowrap; */
   align-content: space-between;
   justify-content: flex-start;
   align-items: center;
@@ -355,8 +365,8 @@ input:focus {
 }
 
 .room-card-staff {
-  width: 100%;
-  height: 100%;
+  width: 12vw;
+  height: 9vh;
   display: flex;
   flex-direction: column;
   align-items: center;
