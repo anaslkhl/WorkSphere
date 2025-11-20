@@ -276,7 +276,7 @@ function unassignStaff(staffId) {
 
 staffForm.addEventListener("click", selectedStaff);
 let allRooms = document.querySelector(".room");
-
+//This function is for rendering rooms and check each member if it exist on the right room//
 function renderStafferoom() {
   const arr = JSON.parse(localStorage.getItem("arr"));
   //   let eachRoom = document.querySelectorAll(".roomStaffList");
