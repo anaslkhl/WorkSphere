@@ -52,6 +52,12 @@ aside {
   border: none;
   border-radius: 10px;
 }
+[attr="none"] {
+  display: none;
+}
+[attr="display"] {
+  display: block;
+}
 .avatar {
   width: 50px;
   height: 50px;
@@ -113,12 +119,12 @@ aside {
   height: 100%;
 
   /* grid-template-areas: ; */
-.test {
+/* .test {
   width: 96%;
   height: 90%;
   margin-left: 0px;
   margin-top: 13px;
-}
+} */
 .room1 {
   grid-area: room1;
   width: 27vw;
@@ -134,10 +140,22 @@ aside {
 }
 .room2 {
   grid-area: room2;
-  margin-top: 27px;
+  margin-top: -2px;
+  width: 17vw;
+  height: 29vh;
+  margin-left: 238px;
+}
+.room2 > .room-card-staff {
+  width: 18vw;
+  padding-left: 18px;
 }
 .room3 {
   grid-area: room3;
+}
+.room3 > .room-card-staff {
+  width: 18vw;
+  padding-left: 18px;
+  margin-left: -18px;
 }
 .room4 {
   grid-area: room4;
@@ -149,12 +167,22 @@ aside {
 .room5 {
   grid-area: room5;
   margin-top: 3px;
-  margin-left: 13px;
+  margin-left: 247px;
+  width: 17vw;
+}
+.room5 > .room-card-staff {
+  width: 18vw;
+  padding-left: 18px;
 }
 .room6 {
   grid-area: room6;
-  margin-top: 3px;
-  margin-left: 17px;
+  width: 17vw;
+  margin-top: 10px;
+  margin-left: -10px;
+}
+.room6 > .room-card-staff {
+  width: 17vw;
+  padding-left: 18px;
 }
 .room7 {
   grid-area: room7;
@@ -207,6 +235,24 @@ aside {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+#FormStaffDet {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 400;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#exitForm {
+  background-color: #cf6060;
+  width: 20px;
+  border-radius: 5px;
+}
 
 h1 {
   color: #333;
@@ -216,14 +262,14 @@ h1 {
   font-size: 24px;
 }
 
-h2 {
+/* h2 {
   color: #007bff;
   margin-top: 25px;
   margin-bottom: 15px;
   font-size: 20px;
   border-left: 5px solid #007bff;
   padding-left: 10px;
-}
+} */
 
 h3 {
   color: #333;

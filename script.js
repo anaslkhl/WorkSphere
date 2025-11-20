@@ -9,6 +9,59 @@ let role11 = document.querySelector(".roleof");
 let donebtn = document.querySelector("#donebtn");
 let membercontain = document.querySelector(".members_container");
 
+let detname = document.querySelector("#detname");
+let detrole = document.querySelector("#detrole");
+let detnumber = document.querySelector("#detnumber");
+let detmail = document.querySelector("#detemail");
+let detexper = document.querySelector("#detexper");
+const detid = document.querySelector("#detid")
+
+membercontain.addEventListener("click", ShowDetails);
+let FormStaffDet = document.querySelector('#FormStaffDet')
+function ShowDetails(e) {
+  let arr = JSON.parse(localStorage.getItem("arr"));
+  const targetstaff = e.target.closest(".members");
+  console.log(targetstaff);
+  const idStaff = targetstaff.dataset.staffId;
+  console.log(idStaff);
+  let indexStaff = arr.findIndex((staff) => parseInt(staff.id) == idStaff);
+  console.log(indexStaff);
+  const staffName = arr[indexStaff].name;
+  const staffNumber = arr[indexStaff].number;
+  const staffRole = arr[indexStaff].role;
+  const staffEmail = arr[indexStaff].email;
+  const staffExper = arr[indexStaff].experience;
+  const staffUrl = arr[indexStaff].url;
+  const staffid = arr[indexStaff].id;
+
+  // console.log(staffName);
+  // console.log(staffNumber);
+  // console.log(staffRole);
+  // console.log(staffEmail);
+  // console.log(staffExper);
+  // console.log(staffUrl);
+
+  detname.textContent = staffName;
+  detnumber.textContent = staffNumber;
+  detmail.textContent = staffEmail;
+  detrole.textContent = staffRole;
+  detexper.textContent = staffExper;
+  detid.textContent = staffid;
+  
+
+  console.log("-------- form -----------")
+
+  // console.log(detname);
+  // console.log(detnumber);
+  // console.log(detmail);
+  // console.log(detrole);
+  // console.log(detexper);
+  // console.log(FormStaffDet)
+
+  FormStaffDet.setAttribute("attr", "display")
+}
+document.querySelector('#exitForm').addEventListener('click', () => {FormStaffDet.setAttribute("attr", "none")})
+
 btn.addEventListener("click", (e) => {
   e.preventDefault();
   foorm.classList.remove("is-hidden");
@@ -35,23 +88,27 @@ donebtn.addEventListener("click", (e) => {
 
   const regexname = /^[\p{L}\s\.\-]{2,100}$/u;
 
-  if (!regexname.test(namee)) {
-    console.error("! invalid name enter a correct name");
+  if (!regexname.test(namee.trim())) {
+    alert("! invalid name enter a correct name");
+    return
   }
-  const regexphone = /^\+?(\s*\d\s*[\-\s\.]*){10,15}$/;
+  const regexphone = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
 
-  if (!regexphone.test(number)) {
-    console.error("Enter a valid phone number");
+  if (!regexphone.test(number.trim())) {
+    alert("Enter a valid phone number");
+    return
   }
   const regexemail = /^[\w\.\-]+@[\w\-]+\.[a-zA-Z]{2,4}(\.[a-zA-Z]{2,4})?$/;
 
-  if (!regexemail.test(emaill)) {
+  if (!regexemail.test(emaill.trim())) {
     alert("Enter a avalid email");
+    return
   }
   const regexurl = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/;
 
-  if (!regexurl.test(urll)) {
+  if (!regexurl.test(urll.trim())) {
     alert("Enter a avalid url");
+    return
   }
 
   foorm.classList.add("is-hidden");
