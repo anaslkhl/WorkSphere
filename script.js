@@ -224,10 +224,21 @@ let roomcontain = document.querySelector(".rooms-container");
 roomcontain.addEventListener("click", addToRooms);
 
 //This Function taking the id of the target room to add the staff to it//
-
+let limitation = {
+  confedence: 4,
+  archive: 3,
+  security: 2,
+  reception: 6,
+  personal: 3,
+  server: 3
+}
+let divMembers = null
 function addToRooms(ev) {
   let arr = JSON.parse(localStorage.getItem("arr"));
   let room = ev.target.closest(".room");
+  console.log(room)
+  divMembers = Array.from(room.querySelectorAll('.room-card-staff')).length
+  console.log(divMembers, "members div")
   if (!room) {
     return;
   }
@@ -247,10 +258,10 @@ function addToRooms(ev) {
 
 //This function for taking the index of the selected staff member and move it to the target room//
 const ZONES = ["reception", "security", "confedence", "archive", "server"];
-
 function selectedStaff(e) {
   let staffCard = e.target.closest(".staff-card");
   let arr = JSON.parse(localStorage.getItem("arr"));
+  console.log(staffCard, "staff card")
   if (!staffCard) {
     return;
   }
@@ -264,6 +275,10 @@ function selectedStaff(e) {
     const selectRole = arr[staffIndx].role;
     console.log(selectRole, "selected role");
     console.log(roomRool, "room role")
+    console.log(divMembers,"divmembers")
+    console.log(limitation[roomRool], "limitation")
+    console.log(limitation)
+    console.log(roomRool)
     if (isVerified(selectRole, roomRool)) {
       if (arr[staffIndx].role == "") {
       }
