@@ -229,6 +229,9 @@ aside {
 #is-hidden {
   display: none;
 }
+.is-empty{
+  background: red;
+}
 /* .formulaire {
   z-index: 400;
   position: absolute;

@@ -279,6 +279,7 @@ function selectedStaff(e) {
     console.log(limitation[roomRool], "limitation")
     console.log(limitation)
     console.log(roomRool)
+    
     if (isVerified(selectRole, roomRool)) {
       if (arr[staffIndx].role == "") {
       }
@@ -292,6 +293,22 @@ function selectedStaff(e) {
     }
   }
 }
+
+function CheckRooms(){
+  let AvRooms = document.querySelectorAll('.room')
+  console.log(AvRooms, "avrooms")
+  AvRooms.forEach(rom => {
+    console.log(rom , "rom")
+    let how = Array.from(rom.querySelectorAll('.room-card-staff')).length
+    console.log(how, "how")
+    if(how === 0){
+      rom.classList.add('is-empty')
+
+      console.log('there is an empty')
+      return
+    }
+  })
+  }
 
 function isVerified(role, roomId) {
   const restricked = ZONES.includes(roomId);
@@ -381,6 +398,7 @@ function renderStafferoom() {
         roomcCmtainer.appendChild(addstaff);
       }
     }
+    CheckRooms();
   });
   //   localStorage.setItem(('arr'), JSON.stringify(arr))
 }
@@ -394,3 +412,14 @@ window.onload = showAllStaff;
 
 // let shd = document.querySelector('.ksdjh')
 // let skhb = shd.children[2];
+
+
+
+
+// if(divMembers == limitation[roomRool]){
+//       let removeBt = document.querySelector('.addToRoom')
+//       console.log(removeBt)
+//       removeBt.classList.add('is-hidden');
+//       alert('The room if full !')
+//       return;
+//     }
