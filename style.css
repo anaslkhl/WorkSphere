@@ -71,15 +71,30 @@ aside {
 }
 
 .name {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 600;
   margin: 0;
+}
+.name11 {
+  font-size: 15px;
+  font-weight: bolder;
+}
+.remove-btn {
+  background: #d0d0d05e;
+  width: 33px;
+  color: red;
+  font-weight: 500;
+  border-radius: 10px;
+  margin-left: 38px;
 }
 
 .role {
   font-size: 13px;
   color: #777;
   margin: 2px 0 0 0;
+}
+.role11 {
+  font-size: 13px;
 }
 .edit-btn {
   background: none;
@@ -364,6 +379,16 @@ input:focus {
   justify-content: flex-start;
   align-items: center;
 }
+.room1 .staff-card {
+  width: 26vh;
+}
+.room4 .staff-card {
+  width: 26vh;
+}
+.sform .staff-card {
+  width: 43ch;
+  height: 10vh;
+}
 
 .staffForm {
   width: 30%;
@@ -383,11 +408,10 @@ input:focus {
   align-items: center;
   justify-content: space-between;
   background-color: #fffbe6;
-  padding: 15px;
-  margin-bottom: 15px;
+  padding: 5px;
+  margin-bottom: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  width: 93%;
 }
 
 .staff-card:hover {
@@ -399,12 +423,11 @@ input:focus {
   max-height: 400px;
   overflow-y: auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
   /* border: solid grey 1px; */
   border-radius: 10px;
-
   margin: 10px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   justify-content: center;

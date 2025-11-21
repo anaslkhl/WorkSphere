@@ -14,7 +14,7 @@ let detrole = document.querySelector("#detrole");
 let detnumber = document.querySelector("#detnumber");
 let detmail = document.querySelector("#detemail");
 let detexper = document.querySelector("#detexper");
-const detid = document.querySelector("#detid")
+const detid = document.querySelector("#detid");
 
 //This Event for Showing the staff details//
 
@@ -22,7 +22,7 @@ membercontain.addEventListener("click", ShowDetails);
 
 //This Function is for showing the selected staff from the unassigned//
 
-let FormStaffDet = document.querySelector('#FormStaffDet')
+let FormStaffDet = document.querySelector("#FormStaffDet");
 function ShowDetails(e) {
   let arr = JSON.parse(localStorage.getItem("arr"));
   const targetstaff = e.target.closest(".members");
@@ -52,9 +52,8 @@ function ShowDetails(e) {
   detrole.textContent = staffRole;
   detexper.textContent = staffExper;
   detid.textContent = staffid;
-  
 
-  console.log("-------- form -----------")
+  console.log("-------- form -----------");
 
   // console.log(detname);
   // console.log(detnumber);
@@ -63,12 +62,14 @@ function ShowDetails(e) {
   // console.log(detexper);
   // console.log(FormStaffDet)
 
-  FormStaffDet.setAttribute("attr", "display")
+  FormStaffDet.setAttribute("attr", "display");
 }
 
 //This event For closing the form details when clickig on 'X' button//
 
-document.querySelector('#exitForm').addEventListener('click', () => {FormStaffDet.setAttribute("attr", "none")})
+document.querySelector("#exitForm").addEventListener("click", () => {
+  FormStaffDet.setAttribute("attr", "none");
+});
 
 //This event For adding a staff member to unassinged list//
 
@@ -103,25 +104,25 @@ donebtn.addEventListener("click", (e) => {
 
   if (!regexname.test(namee.trim())) {
     alert("! invalid name enter a correct name");
-    return
+    return;
   }
   const regexphone = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
 
   if (!regexphone.test(number.trim())) {
     alert("Enter a valid phone number");
-    return
+    return;
   }
   const regexemail = /^[\w\.\-]+@[\w\-]+\.[a-zA-Z]{2,4}(\.[a-zA-Z]{2,4})?$/;
 
   if (!regexemail.test(emaill.trim())) {
     alert("Enter a avalid email");
-    return
+    return;
   }
   const regexurl = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/;
 
   if (!regexurl.test(urll.trim())) {
     alert("Enter a avalid url");
-    return
+    return;
   }
 
   foorm.classList.add("is-hidden");
@@ -183,6 +184,7 @@ function showStaff() {
 showStaff();
 
 let currentTarget = null;
+let roomRool = null;
 
 //This function is for show the staff members of unassigned list for add a staff to a room //
 
@@ -231,10 +233,20 @@ function addToRooms(ev) {
   }
   let targetRoom = room.dataset.roomId;
   currentTarget = targetRoom;
+  roomRool = room.dataset.role;
+  console.log(roomRool, "room role");
   showStaffForm();
 }
 
+// 1- Réception → uniquement les Réceptionnistes
+// 2- Salle des serveurs → uniquement les Techniciens IT
+// 3- Salle de sécurité → uniquement les Agents de sécurité
+// 4- Manager → peut être affecté partout
+// 5- Nettoyage → peut être affecté partout sauf à la Salle d’archives
+// 6- Autres rôles → accès libre sauf aux zones restreintes
+
 //This function for taking the index of the selected staff member and move it to the target room//
+const ZONES = ["reception", "security", "confedence", "archive", "server"];
 
 function selectedStaff(e) {
   let staffCard = e.target.closest(".staff-card");
@@ -249,12 +261,49 @@ function selectedStaff(e) {
   }
   const staffIndx = arr.findIndex((tar) => parseInt(tar.id) === staffId);
   if (staffIndx > -1) {
-    arr[staffIndx].room_id = currentTarget;
-    localStorage.setItem("arr", JSON.stringify(arr));
-    document.querySelector(".staffForm").classList.add("is-hidden");
-    currentTarget = null;
-    showAllStaff();
+    const selectRole = arr[staffIndx].role;
+    console.log(selectRole, "selected role");
+    console.log(roomRool, "room role")
+    if (isVerified(selectRole, roomRool)) {
+      if (arr[staffIndx].role == "") {
+      }
+      arr[staffIndx].room_id = currentTarget;
+      localStorage.setItem("arr", JSON.stringify(arr));
+      document.querySelector(".staffForm").classList.add("is-hidden");
+      currentTarget = null;
+      showAllStaff();
+    } else {
+      alert("! This room is not authorized");
+    }
   }
+}
+
+function isVerified(role, roomId) {
+  const restricked = ZONES.includes(roomId);
+  console.log(role, "role");
+  // console.log(roomId);
+  if (role == "Manager") {
+    return true;
+  }
+  console.log(roomId, "roomid");
+  switch (roomId) {
+    case "reception":
+      return role === "Réceptionniste";
+    case "server":
+      return role === "Technicien IT";
+
+    case "security":
+      return role === "Agent de sécurité";
+    case "archive":
+      if (role === "nettoyage") {
+        return false;
+      }
+  }
+  if (role == "nettoyage") {
+    return true;
+  }
+
+  return false;
 }
 
 //This function for moving the staff members to the unassigned list//
@@ -286,6 +335,7 @@ function renderStafferoom() {
       card.remove();
     });
   });
+  console.log(arr);
   arr.forEach((staff) => {
     if (staff.room_id !== "main_list") {
       const roomcCmtainer = document.querySelector(
@@ -304,7 +354,7 @@ function renderStafferoom() {
         <div class="name">${staff.name}</div>
         <div class="role">${staff.role}</div>
         </div>
-        <button class="remove-btn" data-user-id='${staff.id}'>delete</button>
+        <button class="remove-btn" data-user-id='${staff.id}'>X</button>
         </div>`;
         // console.log(addstaff, "after");
         const removeBtn = addstaff.querySelector(".remove-btn");
