@@ -174,7 +174,7 @@ function showStaff() {
         <p class="name11" data-user-name=${ev.name}>${ev.name}</p>
         <p class="role11" data-user-role=${ev.role}>${ev.role}</p>
         </div>
-        <button class="edit-btn" data-user-edit=${ev.id}>Edit</button>
+   
         </div>
         `;
       membercontain.appendChild(member);
@@ -236,6 +236,7 @@ let divMembers = null
 function addToRooms(ev) {
   let arr = JSON.parse(localStorage.getItem("arr"));
   let room = ev.target.closest(".room");
+  // room.style.background='green'
   console.log(room)
   divMembers = Array.from(room.querySelectorAll('.room-card-staff')).length
   console.log(divMembers, "members div")
@@ -257,7 +258,7 @@ function addToRooms(ev) {
 // 6- Autres rôles → accès libre sauf aux zones restreintes
 
 //This function for taking the index of the selected staff member and move it to the target room//
-const ZONES = ["reception", "security", "confedence", "archive", "server"];
+const ZONES = ["reception", "security", "confedence", "archive", "server", "personal"];
 function selectedStaff(e) {
   let staffCard = e.target.closest(".staff-card");
   let arr = JSON.parse(localStorage.getItem("arr"));
@@ -279,7 +280,14 @@ function selectedStaff(e) {
     console.log(limitation[roomRool], "limitation")
     console.log(limitation)
     console.log(roomRool)
-    
+    if(divMembers == limitation[roomRool]){
+      let removeBt = document.querySelector('.addToRoom')
+      console.log(removeBt)
+      removeBt.classList.add('is-hidden');
+      alert('The room if full !')
+      staffForm.style.display='none'
+      return;
+    }
     if (isVerified(selectRole, roomRool)) {
       if (arr[staffIndx].role == "") {
       }
@@ -306,6 +314,9 @@ function CheckRooms(){
 
       console.log('there is an empty')
       return
+    }
+    else{
+      rom.classList.remove('is-empty')
     }
   })
   }
@@ -359,7 +370,7 @@ staffForm.addEventListener("click", selectedStaff);
 let allRooms = document.querySelector(".room");
 //This function is for rendering rooms and check each member if it exist on the right room//
 function renderStafferoom() {
-  const arr = JSON.parse(localStorage.getItem("arr"));
+  const arr = JSON.parse(localStorage.getItem("arr")) || [];
   //   let eachRoom = document.querySelectorAll(".roomStaffList");
   //   console.log(eachRoom);
   document.querySelectorAll(".room").forEach((roomContainer) => {

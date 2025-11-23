@@ -1,6 +1,9 @@
 body {
   width: 98%;
   height: 98vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 .page {
   width: 100%;
@@ -105,30 +108,58 @@ aside {
   font-weight: 500;
 }
 
-.rooms-container {
+/* .rooms-container {
   background-image: url("./img/backgroundpic.jpg");
   width: 78%;
-  height: 90%;
+  
+  aspect-ratio: 1000 / 630; 
+  max-height: 90vh; 
+  
   background-repeat: no-repeat;
-  /* background-size: 100%; */
-  /* align-self: contain; */
-  padding-bottom: 50px;
-  background-size: contain;
+  background-size: 100% 100%; 
   background-position: center;
-  /* padding: 20px; */
-  /* position: relative; */
-  /* overflow: hidden; */
-  gap: 5px;
-  padding: 25px;
+  
+  padding: 2.5% 2.5%; 
+  box-sizing: border-box; 
+  
   display: grid;
-  grid-template-columns: 1.35fr 0.6fr 0.8fr 0.8fr;
-  grid-template-rows: 1.1fr 1fr 1.1fr;
+ 
+  grid-template-columns: 35% 15% 25% 25%; 
+  grid-template-rows: 35% 30% 35%; 
+  
   grid-template-areas:
     "room1 room7 room2 room3"
     "room4 room7 room8 room8"
     "room4 room7 room5 room6";
-}
+  
+  gap: 0;
+  position: relative; /
+} */
 
+.rooms-container {
+  background-image: url("./img/backgroundpic.jpg");
+  width: 78%;
+  aspect-ratio: 1000 / 630;
+  max-height: 90vh;
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 38% 16% 23% 22%;
+  grid-template-rows: 33% 32% 33%;
+  grid-template-areas:
+    "room1 room7 room2 room3"
+    "room4 room7 room8 room8"
+    "room4 room7 room5 room6";
+
+  gap: 0;
+}
 /* .rooms {
   width: 100%;
   height: 100%;
@@ -142,70 +173,69 @@ aside {
 } */
 .room1 {
   grid-area: room1;
-  width: 27vw;
-  height: 23vh;
   display: flex;
   flex-direction: column-reverse;
   flex-wrap: wrap;
-  row-gap: 31px;
-  /* align-content: space-between; */
-  /* justify-content: flex-start; */
+  row-gap: 5%;
+  margin-top: 18px;
+  margin-bottom: 4px;
+  margin-left: 17px;
+  margin-right: 6px;
   align-items: center;
-  /* margin-top: 30px; */
+  padding: 2%;
 }
 .room2 {
   grid-area: room2;
-  margin-top: -2px;
-  width: 17vw;
-  height: 29vh;
-  margin-left: 238px;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-bottom: -7px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
 }
-.room2 > .room-card-staff {
-  width: 18vw;
-  padding-left: 18px;
-}
+
 .room3 {
   grid-area: room3;
-}
-.room3 > .room-card-staff {
-  width: 18vw;
-  padding-left: 18px;
-  margin-left: -18px;
+  margin-top: 18px;
+  margin-bottom: -7px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
 }
 .room4 {
   grid-area: room4;
-  height: 93%;
-  margin-top: 5px;
-  row-gap: 30px;
+  height: 98%;
+  row-gap: 5%;
+  margin-top: 12px;
+  margin-left: 17px;
+  margin-right: 5px;
   flex-wrap: wrap;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding: 2%;
 }
 .room5 {
   grid-area: room5;
-  margin-top: 3px;
-  margin-left: 247px;
-  width: 17vw;
-}
-.room5 > .room-card-staff {
-  width: 18vw;
-  padding-left: 18px;
+  margin-top: 5%;
+  margin-left: 7%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
 }
 .room6 {
   grid-area: room6;
-  width: 17vw;
-  margin-top: 10px;
-  margin-left: -10px;
-}
-.room6 > .room-card-staff {
-  width: 17vw;
-  padding-left: 18px;
+  margin-top: 6%;
+  margin-left: 0; /* Ajustement pour le faire coller au bord */
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
 }
 .room7 {
   grid-area: room7;
-  /* background-color: yellow; */
 }
 .room8 {
   grid-area: room8;
-  /* background-color: steelblue; */
 }
 
 .input1 {
@@ -229,8 +259,11 @@ aside {
 #is-hidden {
   display: none;
 }
-.is-empty{
-  background: red;
+.is-empty {
+  background: #ff000059;
+}
+.is-full {
+  background: green;
 }
 /* .formulaire {
   z-index: 400;
@@ -383,7 +416,8 @@ input:focus {
   align-items: center;
 }
 .room1 .staff-card {
-  width: 26vh;
+  width: 23vh;
+  height: 6vh;
 }
 .room4 .staff-card {
   width: 26vh;
@@ -412,6 +446,8 @@ input:focus {
   justify-content: space-between;
   background-color: #fffbe6;
   padding: 5px;
+  width: 27vh;
+  height: 6vh;
   margin-bottom: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -437,9 +473,116 @@ input:focus {
 }
 
 .room-card-staff {
-  width: 12vw;
-  height: 9vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 90%;
+  height: auto;
+  margin-bottom: 5px;
+}
+.room-card-staff .staff-card {
+  padding: 2px;
+}
+.room-card-staff .avatar {
+  width: 30px;
+  height: 30px;
+}
+.room-card-staff .name,
+.room-card-staff .role {
+  font-size: 10px;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .page {
+    flex-direction: column;
+    gap: 10px;
+  }
+  aside {
+    width: 98%;
+    height: auto;
+    padding: 10px 0;
+    display: none;
+  }
+  .members_container {
+    max-height: 200px;
+  }
+  .rooms-container {
+    width: 98%;
+    height: auto;
+    aspect-ratio: 1000 / 630;
+    margin: 0 auto;
+    padding: 2% 2%;
+  }
+  .room1,
+  .room4,
+  .room2,
+  .room3,
+  .room5,
+  .room6 {
+    padding: 1%;
+    margin: 0;
+  }
+  .room2 {
+    margin-left: 15%;
+    .room5 {
+      margin-left: 10%;
+    }
+    .addToRoom {
+      width: 20px;
+      height: 20px;
+      font-size: large;
+    }
+  }
+
+  @media (max-width: 767px) {
+    body {
+      transform: rotate(90deg);
+      transform-origin: top left;
+      width: 100vh;
+      height: 100vw;
+      overflow-x: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+    .page {
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    aside {
+      width: 100%;
+      height: auto;
+      padding: 5px 0;
+    }
+    .members_container {
+      max-height: 150px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .members {
+      width: 45%;
+      margin: 5px;
+    }
+    #buttonn {
+      width: 150px;
+      margin: 10px auto;
+      align-self: center;
+    }
+    .rooms-container {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1000 / 630;
+      padding: 1% 1%;
+    }
+
+    .room-card-staff .name,
+    .room-card-staff .role {
+      font-size: 8px;
+    }
+    .addToRoom {
+      width: 18px;
+      height: 18px;
+      font-size: medium;
+    }
+  }
 }
