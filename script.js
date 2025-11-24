@@ -26,7 +26,7 @@ let FormStaffDet = document.querySelector("#FormStaffDet");
 function ShowDetails(e) {
   let arr = JSON.parse(localStorage.getItem("arr"));
   const targetstaff = e.target.closest(".members");
-  console.log(targetstaff);
+  // console.log(targetstaff);
   const idStaff = targetstaff.dataset.staffId;
   console.log(idStaff);
   let indexStaff = arr.findIndex((staff) => parseInt(staff.id) == idStaff);
@@ -79,7 +79,7 @@ btn.addEventListener("click", (e) => {
   // roomcontain.style.display="none"
 });
 
-//This event for taking the inputs values with the validation of each one of them//
+//This event for taking the input values with the validation of each one of them//
 
 donebtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -90,8 +90,7 @@ donebtn.addEventListener("click", (e) => {
   let emaill = document.querySelector("#emailof").value.trim();
   let experiences = document.querySelector("#experof").value.trim();
   let urll = document.querySelector("#urlof").value.trim();
-  let maxId =
-    arr.length > 0 ? Math.max(...arr.map((s) => parseInt(s.id) || 0)) : 0;
+  let maxId = arr.length > 0 ? Math.max(...arr.map((s) => parseInt(s.id) || 0)) : 0;
   let nextid = maxId + 1;
 
   //   let nextid = JSON.parse(localStorage.getItem("arr")) || 0;
@@ -147,44 +146,44 @@ donebtn.addEventListener("click", (e) => {
   showStaff();
   renderStafferoom();
 });
-let staffForm = document.querySelector(".staffForm");
-let addToRoom = document.querySelector(".addToRoom");
 
-//This event for add a staff to a room//
 
-addToRoom.addEventListener("click", (e) => showStaffForm());
 
 //This function for show staff members on the unassinged list//
 
 function showStaff() {
   let arr = JSON.parse(localStorage.getItem("arr")) || [];
   membercontain.innerHTML = "";
-
-  arr
-    .filter((ev) => ev.room_id === "main_list")
-    .forEach((ev) => {
-      let member = document.createElement("div");
-      member.innerHTML += `
-        <div class="members" data-staff-id=${ev.id}>
-        <img
-        class="avatar"
-        src="./img/portrait-3d-male-doctor.jpg"
-        alt="nothing"/>
-        <div class="info">
-        <p class="name11" data-user-name=${ev.name}>${ev.name}</p>
-        <p class="role11" data-user-role=${ev.role}>${ev.role}</p>
-        </div>
-   
-        </div>
-        `;
-      membercontain.appendChild(member);
-      localStorage.setItem("arr", JSON.stringify(arr));
-    });
+  
+  arr.filter((ev) => ev.room_id === "main_list").forEach((ev) => {
+    let member = document.createElement("div");
+    member.innerHTML += `
+    <div class="members" data-staff-id=${ev.id}>
+    <img
+    class="avatar"
+    src="./img/portrait-3d-male-doctor.jpg"
+    alt="nothing"/>
+    <div class="info">
+    <p class="name11" data-user-name=${ev.name}>${ev.name}</p>
+    <p class="role11" data-user-role=${ev.role}>${ev.role}</p>
+    </div>
+    
+    </div>
+    `;
+    membercontain.appendChild(member);
+    localStorage.setItem("arr", JSON.stringify(arr));
+  });
 }
 showStaff();
 
 let currentTarget = null;
 let roomRool = null;
+
+//This event for add a staff to a room//
+
+let staffForm = document.querySelector(".staffForm");
+let addToRoom = document.querySelector(".addToRoom");
+addToRoom.addEventListener("click", (e) => showStaffForm());
 
 //This function is for show the staff members of unassigned list for add a staff to a room //
 
@@ -220,10 +219,7 @@ function showStaffForm() {
   });
 }
 // let selectedStaffId = null;
-let roomcontain = document.querySelector(".rooms-container");
-roomcontain.addEventListener("click", addToRooms);
 
-//This Function taking the id of the target room to add the staff to it//
 let limitation = {
   confedence: 4,
   archive: 3,
@@ -232,7 +228,13 @@ let limitation = {
   personal: 3,
   server: 3
 }
+//This Function taking the id of the target room to add the staff to it//
+
+let roomcontain = document.querySelector(".rooms-container");
+roomcontain.addEventListener("click", addToRooms);
+
 let divMembers = null
+
 function addToRooms(ev) {
   let arr = JSON.parse(localStorage.getItem("arr"));
   let room = ev.target.closest(".room");
@@ -311,12 +313,13 @@ function CheckRooms(){
     console.log(how, "how")
     if(how === 0){
       rom.classList.add('is-empty')
-
       console.log('there is an empty')
       return
     }
-    else{
+    else if (how !== 0){
       rom.classList.remove('is-empty')
+      // rom.classList.add('is-full')
+      return
     }
   })
   }
