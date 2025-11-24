@@ -240,7 +240,7 @@ function addToRooms(ev) {
   let room = ev.target.closest(".room");
   // room.style.background='green'
   console.log(room)
-  divMembers = Array.from(room.querySelectorAll('.room-card-staff')).length
+  // divMembers = Array.from(room.querySelectorAll('.room-card-staff')).length
   console.log(divMembers, "members div")
   if (!room) {
     return;
